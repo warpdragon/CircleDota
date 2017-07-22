@@ -1,0 +1,161 @@
+//=====================================================================
+// Creeps
+//=====================================================================
+
+	// Air Creeps
+	//=================================================================
+	#base "units/creeps/air/npc_dota_air_siege.txt"
+	#base "units/creeps/air/npc_dota_air_siege_upgraded.txt"
+	#base "units/creeps/air/npc_dota_air_siege_upgraded_mega.txt"
+	#base "units/creeps/air/npc_dota_creep_air_melee.txt"
+	#base "units/creeps/air/npc_dota_creep_air_melee_upgraded.txt"
+	#base "units/creeps/air/npc_dota_creep_air_melee_upgraded_mega.txt"
+	#base "units/creeps/air/npc_dota_creep_air_ranged.txt"
+	#base "units/creeps/air/npc_dota_creep_air_ranged_upgraded.txt"
+	#base "units/creeps/air/npc_dota_creep_air_ranged_upgraded_mega.txt"
+
+	// Fire Creeps
+	//=================================================================
+	#base "units/creeps/fire/npc_dota_fire_siege.txt"
+	#base "units/creeps/fire/npc_dota_fire_siege_upgraded.txt"
+	#base "units/creeps/fire/npc_dota_fire_siege_upgraded_mega.txt"
+	#base "units/creeps/fire/npc_dota_creep_fire_melee.txt"
+	#base "units/creeps/fire/npc_dota_creep_fire_melee_upgraded.txt"
+	#base "units/creeps/fire/npc_dota_creep_fire_melee_upgraded_mega.txt"
+	#base "units/creeps/fire/npc_dota_creep_fire_ranged.txt"
+	#base "units/creeps/fire/npc_dota_creep_fire_ranged_upgraded.txt"
+	#base "units/creeps/fire/npc_dota_creep_fire_ranged_upgraded_mega.txt"
+
+	// Water Creeps
+	//=================================================================
+	#base "units/creeps/water/npc_dota_water_siege.txt"
+	#base "units/creeps/water/npc_dota_water_siege_upgraded.txt"
+	#base "units/creeps/water/npc_dota_water_siege_upgraded_mega.txt"
+	#base "units/creeps/water/npc_dota_creep_water_melee.txt"
+	#base "units/creeps/water/npc_dota_creep_water_melee_upgraded.txt"
+	#base "units/creeps/water/npc_dota_creep_water_melee_upgraded_mega.txt"
+	#base "units/creeps/water/npc_dota_creep_water_ranged.txt"
+	#base "units/creeps/water/npc_dota_creep_water_ranged_upgraded.txt"
+	#base "units/creeps/water/npc_dota_creep_water_ranged_upgraded_mega.txt"
+
+	// Earth Creeps
+	//=================================================================
+	#base "units/creeps/earth/npc_dota_earth_siege.txt"
+	#base "units/creeps/earth/npc_dota_earth_siege_upgraded.txt"
+	#base "units/creeps/earth/npc_dota_earth_siege_upgraded_mega.txt"
+	#base "units/creeps/earth/npc_dota_creep_earth_melee.txt"
+	#base "units/creeps/earth/npc_dota_creep_earth_melee_upgraded.txt"
+	#base "units/creeps/earth/npc_dota_creep_earth_melee_upgraded_mega.txt"
+	#base "units/creeps/earth/npc_dota_creep_earth_ranged.txt"
+	#base "units/creeps/earth/npc_dota_creep_earth_ranged_upgraded.txt"
+	#base "units/creeps/earth/npc_dota_creep_earth_ranged_upgraded_mega.txt"
+
+//=====================================================================
+// Other
+//=====================================================================
+
+	// Shrines
+	//=====================================================================
+	#base "units/buildings/other/air/npc_dota_air_healers.txt"
+	#base "units/buildings/other/fire/npc_dota_fire_healers.txt"
+	#base "units/buildings/other/water/npc_dota_water_healers.txt"
+	#base "units/buildings/other/earth/npc_dota_earth_healers.txt"
+
+	// Fountains
+	//=====================================================================
+	#base "units/buildings/other/air/npc_dota_air_fountain.txt"
+	#base "units/buildings/other/air/npc_dota_fire_fountain.txt"
+	#base "units/buildings/other/air/npc_dota_water_fountain.txt"
+	#base "units/buildings/other/air/npc_dota_earth_fountain.txt"
+
+	// Forts
+	//=====================================================================
+	#base "units/buildings/other/air/npc_dota_air_fort.txt"
+	#base "units/buildings/other/air/npc_dota_fire_fort.txt"
+	#base "units/buildings/other/air/npc_dota_water_fort.txt"
+	#base "units/buildings/other/air/npc_dota_earth_fort.txt"
+
+//=====================================================================
+// Towers
+//=====================================================================
+
+	// Air Towers
+	//=================================================================
+	#base "units/buildings/towers/air/npc_dota_air_tower1_clockwise.txt"
+	#base "units/buildings/towers/air/npc_dota_air_tower2_clockwise.txt"
+	#base "units/buildings/towers/air/npc_dota_air_tower3_clockwise.txt"
+	#base "units/buildings/towers/air/npc_dota_air_tower4_clockwise.txt"
+	#base "units/buildings/towers/air/npc_dota_air_tower1_counter_clockwise.txt"
+	#base "units/buildings/towers/air/npc_dota_air_tower2_counter_clockwise.txt"
+	#base "units/buildings/towers/air/npc_dota_air_tower3_counter_clockwise.txt"
+	#base "units/buildings/towers/air/npc_dota_air_tower4_counter_clockwise.txt"
+
+	// Fire Towers
+	//=================================================================
+	#base "units/buildings/towers/fire/npc_dota_fire_tower1_clockwise.txt"
+	#base "units/buildings/towers/fire/npc_dota_fire_tower2_clockwise.txt"
+	#base "units/buildings/towers/fire/npc_dota_fire_tower3_clockwise.txt"
+	#base "units/buildings/towers/fire/npc_dota_fire_tower4_clockwise.txt"
+	#base "units/buildings/towers/fire/npc_dota_fire_tower1_counter_clockwise.txt"
+	#base "units/buildings/towers/fire/npc_dota_fire_tower2_counter_clockwise.txt"
+	#base "units/buildings/towers/fire/npc_dota_fire_tower3_counter_clockwise.txt"
+	#base "units/buildings/towers/fire/npc_dota_fire_tower4_counter_clockwise.txt"
+
+	// Water Towers
+	//=================================================================
+	#base "units/buildings/towers/water/npc_dota_water_tower1_clockwise.txt"
+	#base "units/buildings/towers/water/npc_dota_water_tower2_clockwise.txt"
+	#base "units/buildings/towers/water/npc_dota_water_tower3_clockwise.txt"
+	#base "units/buildings/towers/water/npc_dota_water_tower4_clockwise.txt"
+	#base "units/buildings/towers/water/npc_dota_water_tower1_counter_clockwise.txt"
+	#base "units/buildings/towers/water/npc_dota_water_tower2_counter_clockwise.txt"
+	#base "units/buildings/towers/water/npc_dota_water_tower3_counter_clockwise.txt"
+	#base "units/buildings/towers/water/npc_dota_water_tower4_counter_clockwise.txt"
+
+	// Earth Towers
+	//=================================================================
+	#base "units/buildings/towers/earth/npc_dota_earth_tower1_clockwise.txt"
+	#base "units/buildings/towers/earth/npc_dota_earth_tower2_clockwise.txt"
+	#base "units/buildings/towers/earth/npc_dota_earth_tower3_clockwise.txt"
+	#base "units/buildings/towers/earth/npc_dota_earth_tower4_clockwise.txt"
+	#base "units/buildings/towers/earth/npc_dota_earth_tower1_counter_clockwise.txt"
+	#base "units/buildings/towers/earth/npc_dota_earth_tower2_counter_clockwise.txt"
+	#base "units/buildings/towers/earth/npc_dota_earth_tower3_counter_clockwise.txt"
+	#base "units/buildings/towers/earth/npc_dota_earth_tower4_counter_clockwise.txt"
+
+//=====================================================================
+// Barracks
+//=====================================================================
+
+	// Air Barracks
+	//=================================================================
+	#base "units/buildings/barracks/air/npc_dota_air_melee_rax_clockwise.txt"
+	#base "units/buildings/barracks/air/npc_dota_air_melee_rax_counter_clockwise.txt"
+	#base "units/buildings/barracks/air/npc_dota_air_range_rax_clockwise.txt"
+	#base "units/buildings/barracks/air/npc_dota_air_range_rax_counter_clockwise.txt"	
+
+	// Fire Barracks
+	//=================================================================
+	#base "units/buildings/barracks/fire/npc_dota_fire_melee_rax_clockwise.txt"
+	#base "units/buildings/barracks/fire/npc_dota_fire_melee_rax_counter_clockwise.txt"
+	#base "units/buildings/barracks/fire/npc_dota_fire_range_rax_clockwise.txt"
+	#base "units/buildings/barracks/fire/npc_dota_fire_range_rax_counter_clockwise.txt"
+
+	// Water Barracks
+	//=================================================================
+	#base "units/buildings/barracks/water/npc_dota_water_melee_rax_clockwise.txt"
+	#base "units/buildings/barracks/water/npc_dota_water_melee_rax_counter_clockwise.txt"
+	#base "units/buildings/barracks/water/npc_dota_water_range_rax_clockwise.txt"
+	#base "units/buildings/barracks/water/npc_dota_water_range_rax_counter_clockwise.txt"
+
+	// Earth Barracks
+	//=================================================================		
+	#base "units/buildings/barracks/earth/npc_dota_earth_melee_rax_clockwise.txt"
+	#base "units/buildings/barracks/earth/npc_dota_earth_melee_rax_counter_clockwise.txt"
+	#base "units/buildings/barracks/earth/npc_dota_earth_range_rax_clockwise.txt"
+	#base "units/buildings/barracks/earth/npc_dota_earth_range_rax_counter_clockwise.txt"
+
+"DOTAUnits"
+{
+
+}
