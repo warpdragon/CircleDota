@@ -1,5 +1,11 @@
 # Circle Dota
 
+### Map
+
+- Circle-shaped map
+- Two lanes per team
+- Rotating lanes
+
 ### Panorama
 
 - Multiple Team UI
