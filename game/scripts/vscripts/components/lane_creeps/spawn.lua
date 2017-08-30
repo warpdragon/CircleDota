@@ -1,4 +1,5 @@
 -- Required by components/index
+require('settings')
 
 if SpawnLaneCreeps == nil then
     DebugPrint ('[lane_creeps/spawn] creating LaneCreep Spawner')
@@ -58,14 +59,14 @@ function SpawnLaneCreeps:SpawnCreeps()
         })
 
         -- then we apply color with a helper function
-        self:ApplyTeamColor(hCreep)
+        self:ApplyTeamColor(hCreep, teamID)
 
         -- We don't want the creeps to walk next to each other so we add some
         -- delay inbetween giving them orders.
         Timers:CreateTimer(creepID * self.Settings.CreepInterval, function()
           -- We loop through all the Waypoints and queue the orders.
-          for waypointID,Waypoint in ipairs(Path.Waypoints) do
-            for _,waypointPosition in ipairs(values[values.condition]) do
+          for waypointID,Waypoint in pairs(Path.Waypoints) do
+            for _,waypointPosition in pairs(Waypoint[tostring(Waypoint.condition)]) do
               ExecuteOrderFromTable({
                 UnitIndex = hCreep:GetEntityIndex(),
                 OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
@@ -80,7 +81,7 @@ function SpawnLaneCreeps:SpawnCreeps()
   end
 end
 
-function SpawnLaneCreeps:ApplyColor(hUnit)
-  local vColor = TEAM_COLORS[hUnit:GetTeam()]
-  hUnit:SetRenderColor(vColor.x, vColor.y, vColor.z)
+function SpawnLaneCreeps:ApplyTeamColor(hUnit, teamID)
+  local vColor = TEAM_COLORS[teamID]
+  hUnit:SetRenderColor(vColor[1], vColor[2], vColor[3])
 end
