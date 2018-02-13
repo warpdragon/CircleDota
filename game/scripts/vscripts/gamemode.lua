@@ -3,12 +3,18 @@ BAREBONES_VERSION = "1.00"
 
 -- Set this to true if you want to see a complete debug output of all events/processes done by barebones
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
-BAREBONES_DEBUG_SPEW = false 
+BAREBONES_DEBUG_SPEW = false
 
 if GameMode == nil then
     DebugPrint( '[BAREBONES] creating barebones game mode' )
-    _G.GameMode = class({})
+    print("Lua Version: " .. _VERSION)
+    GameMode = class({})
 end
+
+-- functional library, sugar for excellent code. this should be usable in any library, so we include it first
+require('libraries/functional')
+-- Lua Fun(ctional) library
+require('libraries/fun')()
 
 -- This library allow for easily delayed/timed actions
 require('libraries/timers')
@@ -32,6 +38,10 @@ require('libraries/modmaker')
 require('libraries/pathgraph')
 -- This library (by Noya) provides player selection inspection and management from server lua
 require('libraries/selection')
+-- This library provides utility functions for all kinds of entities
+require('libraries/entities')
+-- ChatCommand library
+require('libraries/chatcommand')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
@@ -52,8 +62,8 @@ require('components/index')
 
   In this function, place all of your PrecacheItemByNameAsync and PrecacheUnitByNameAsync.  These calls will be made
   after all players have loaded in, but before they have selected their heroes. PrecacheItemByNameAsync can also
-  be used to precache dynamically-added datadriven abilities instead of items.  PrecacheUnitByNameAsync will 
-  precache the precache{} block statement of the unit and all precache{} block statements for every Ability# 
+  be used to precache dynamically-added datadriven abilities instead of items.  PrecacheUnitByNameAsync will
+  precache the precache{} block statement of the unit and all precache{} block statements for every Ability#
   defined on the unit.
 
   This function should only be called once.  If you want to/need to precache more items/abilities/units at a later
@@ -63,7 +73,7 @@ require('components/index')
   This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
 ]]
 function GameMode:PostLoadPrecache()
-  DebugPrint("[BAREBONES] Performing Post-Load precache")    
+  DebugPrint("[BAREBONES] Performing Post-Load precache")
   --PrecacheItemByNameAsync("item_example_item", function(...) end)
   --PrecacheItemByNameAsync("example_ability", function(...) end)
 
@@ -96,20 +106,6 @@ end
 ]]
 function GameMode:OnHeroInGame(hero)
   DebugPrint("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
-
-  -- This line for example will set the starting gold of every hero to 500 unreliable gold
-  --hero:SetGold(500, false)
-
-  -- These lines will create an item and add it to the player, effectively ensuring they start with the item
-  -- local item = CreateItem("item_example_item", hero, hero)
-  -- hero:AddItem(item)
-
-  --[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
-    --with the "example_ability" ability
-
-  local abil = hero:GetAbilityByIndex(1)
-  hero:RemoveAbility(abil:GetAbilityName())
-  hero:AddAbility("example_ability")]]
 end
 
 --[[
@@ -118,12 +114,11 @@ end
   is useful for starting any game logic timers/thinkers, beginning the first round, etc.
 ]]
 
-function GameMode:OnGameInProgress() -- DebugPrint("[BAREBONES] The game has officially begun")
+function GameMode:OnGameInProgress()
+  DebugPrint("[BAREBONES] The game has officially begun")
 
--- Initializing creep spawns.
-    InitModule(SpawnLaneCreeps)
-
-
+  -- Initializing creep spawns.
+  InitModule(SpawnLaneCreeps)
 end
 
 
@@ -131,33 +126,13 @@ end
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
-  GameMode = self
   DebugPrint('[BAREBONES] Starting to load Barebones gamemode...')
 
-  -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
-  Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
+-- Make buildings
+  InitModule(SpawnTowers)
+  InitModule(SpawnFountains)
+  InitModule(ChatCommand)
+  InitModule(DevCheats)
 
   DebugPrint('[BAREBONES] Done loading Barebones gamemode!\n\n')
-
-
--- Make buildings
-    InitModule(SpawnTowers)
-    InitModule(SpawnFountains)
-
-
-end
-
--- This is an example console command
-function GameMode:ExampleConsoleCommand()
-  print( '******* Example Console Command ***************' )
-  local cmdPlayer = Convars:GetCommandClient()
-  if cmdPlayer then
-    local playerID = cmdPlayer:GetPlayerID()
-    if playerID ~= nil and playerID ~= -1 then
-      -- Do something here for the player who called this command
-      PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
-    end
-  end
-
-  print( '*********************************************' )
 end
