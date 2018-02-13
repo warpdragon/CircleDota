@@ -1,176 +1,193 @@
 
 function buildLaneCreepSettings()
+  local Waypoints = {}
   -- we don't want to expose any functions to global
   --  if we don't need to expose them
   local function getPosition(name)
-    -- find a entity and return its Position
-    return GetGroundPosition(assert( -- assert that the entity is not
-       Entities:FindByName(nil, name),
+    return GetGroundPosition(assert(
+      Entities:FindByName(nil, name),
       "invalid entity: couldn't find entity by name: '" .. name .. "'"
-    ):GetAbsOrigin(), -- assert return its first argument if it is not nil
-    nil)
+    ):GetAbsOrigin(), nil)
+  end
+
+  local function buildWaypoint(name)
+    -- build a new Waypoint if it doesn't exist already and return it
+    if not Waypoints[name] then
+      Waypoints[name] = {
+        buildOrder = function(hUnit)
+          return {
+            UnitIndex = hUnit:entindex(),
+            OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+            Position = getPosition(name), --Optional.  Only used when targeting the ground
+            Queue = 1 --Optional.  Used for queueing up abilities
+          }
+        end,
+        Zone = Entities:FindByName(nil, "zone_" .. name)
+      }
+    end
+    return Waypoints[name]
   end
 
   local function buildSinglePoint(iTime)
     return {
-      condition = "always",
+      condition = function() return "always" end,
       ["always"] = {
-        getPosition("point_" .. tostring(iTime) .. "_oclock"),
+        buildWaypoint("point_" .. tostring(iTime) .. "_oclock"),
       }
     }
   end
 
   local Prefab = {
     air_c = {
-      condition = IsValidAlive(Entities:FindByName(nil, "fountain_air")),
+      condition = function() return IsValidAlive(Entities:FindByName(nil, "fountain_air")) end,
       ["true"] = {
-        getPosition("point_cc_air"),
-        getPosition("fountain_air"),
-        getPosition("point_c_air"),
+        buildWaypoint("point_cc_air"),
+        buildWaypoint("fountain_air"),
+        buildWaypoint("point_c_air"),
       },
       ["false"] = {
-        getPosition("point_10_oclock"),
-        getPosition("point_11_oclock"),
+        buildWaypoint("point_10_oclock"),
+        buildWaypoint("point_11_oclock"),
       },
     },
     air_cc = {
-      condition = IsValidAlive(Entities:FindByName(nil, "fountain_air")),
+      condition = function() return IsValidAlive(Entities:FindByName(nil, "fountain_air")) end,
       ["true"] = {
-        getPosition("point_c_air"),
-        getPosition("fountain_air"),
-        getPosition("point_cc_air"),
+        buildWaypoint("point_c_air"),
+        buildWaypoint("fountain_air"),
+        buildWaypoint("point_cc_air"),
       },
       ["false"] = {
-        getPosition("point_11_oclock"),
-        getPosition("point_10_oclock"),
+        buildWaypoint("point_11_oclock"),
+        buildWaypoint("point_10_oclock"),
       }
     },
     water_c = {
-      condition = IsValidAlive(Entities:FindByName(nil, "fountain_water")),
+      condition = function() return IsValidAlive(Entities:FindByName(nil, "fountain_water")) end,
       ["true"] = {
-        getPosition("point_cc_water"),
-        getPosition("fountain_water"),
-        getPosition("point_c_water"),
+        buildWaypoint("point_cc_water"),
+        buildWaypoint("fountain_water"),
+        buildWaypoint("point_c_water"),
       },
       ["false"] = {
-        getPosition("point_1_oclock"),
-        getPosition("point_2_oclock"),
+        buildWaypoint("point_1_oclock"),
+        buildWaypoint("point_2_oclock"),
       },
     },
     water_cc = {
-      condition = IsValidAlive(Entities:FindByName(nil, "fountain_water")),
+      condition = function() return IsValidAlive(Entities:FindByName(nil, "fountain_water")) end,
       ["true"] = {
-        getPosition("point_c_water"),
-        getPosition("fountain_water"),
-        getPosition("point_cc_water"),
+        buildWaypoint("point_c_water"),
+        buildWaypoint("fountain_water"),
+        buildWaypoint("point_cc_water"),
       },
       ["false"] = {
-        getPosition("point_2_oclock"),
-        getPosition("point_1_oclock"),
+        buildWaypoint("point_2_oclock"),
+        buildWaypoint("point_1_oclock"),
       }
     },
     fire_c = {
-      condition = tostring(IsValidAlive(Entities:FindByName(nil, "fountain_fire"))),
+      condition = function() return IsValidAlive(Entities:FindByName(nil, "fountain_fire")) end,
       ["true"] = {
-        getPosition("point_cc_fire"),
-        getPosition("fountain_fire"),
-        getPosition("point_c_fire"),
+        buildWaypoint("point_cc_fire"),
+        buildWaypoint("fountain_fire"),
+        buildWaypoint("point_c_fire"),
       },
       ["false"] = {
-        getPosition("point_4_oclock"),
-        getPosition("point_5_oclock"),
+        buildWaypoint("point_4_oclock"),
+        buildWaypoint("point_5_oclock"),
       }
     },
     fire_cc = {
-      condition = tostring(IsValidAlive(Entities:FindByName(nil, "fountain_fire"))),
+      condition = function() return IsValidAlive(Entities:FindByName(nil, "fountain_fire")) end,
       ["true"] = {
-        getPosition("point_c_fire"),
-        getPosition("fountain_fire"),
-        getPosition("point_cc_fire"),
+        buildWaypoint("point_c_fire"),
+        buildWaypoint("fountain_fire"),
+        buildWaypoint("point_cc_fire"),
       },
       ["false"] = {
-        getPosition("point_5_oclock"),
-        getPosition("point_4_oclock"),
+        buildWaypoint("point_5_oclock"),
+        buildWaypoint("point_4_oclock"),
       }
     },
     earth_c = {
-      condition = tostring(IsValidAlive(Entities:FindByName(nil, "fountain_earth"))),
+      condition = function() return IsValidAlive(Entities:FindByName(nil, "fountain_earth")) end,
       ["true"] = {
-        getPosition("point_cc_earth"),
-        getPosition("fountain_earth"),
-        getPosition("point_c_earth"),
+        buildWaypoint("point_cc_earth"),
+        buildWaypoint("fountain_earth"),
+        buildWaypoint("point_c_earth"),
       },
       ["false"] = {
-        getPosition("point_7_oclock"),
-        getPosition("point_8_oclock"),
+        buildWaypoint("point_7_oclock"),
+        buildWaypoint("point_8_oclock"),
       }
     },
     earth_cc = {
-      condition = tostring(IsValidAlive(Entities:FindByName(nil, "fountain_earth"))),
+      condition = function() return IsValidAlive(Entities:FindByName(nil, "fountain_earth")) end,
       ["true"] = {
-        getPosition("point_c_earth"),
-        getPosition("fountain_earth"),
-        getPosition("point_cc_earth"),
+        buildWaypoint("point_c_earth"),
+        buildWaypoint("fountain_earth"),
+        buildWaypoint("point_cc_earth"),
       },
       ["false"] = {
-        getPosition("point_8_oclock"),
-        getPosition("point_7_oclock"),
+        buildWaypoint("point_8_oclock"),
+        buildWaypoint("point_7_oclock"),
       }
     },
     air_c_12 = {
-      condition = "always",
+      condition = function() return "always" end,
       ["always"] = {
-        getPosition("point_c_air"),
-        getPosition("point_12_oclock"),
+        buildWaypoint("point_c_air"),
+        buildWaypoint("point_12_oclock"),
       }
     },
     air_cc_9 = {
-      condition = "always",
+      condition = function() return "always" end,
       ["always"] = {
-        getPosition("point_cc_air"),
-        getPosition("point_9_oclock"),
+        buildWaypoint("point_cc_air"),
+        buildWaypoint("point_9_oclock"),
       }
     },
     fire_c_6 = {
-      condition = "always",
+      condition = function() return "always" end,
       ["always"] = {
-        getPosition("point_c_fire"),
-        getPosition("point_6_oclock"),
+        buildWaypoint("point_c_fire"),
+        buildWaypoint("point_6_oclock"),
       }
     },
     fire_cc_3 = {
-      condition = "always",
+      condition = function() return "always" end,
       ["always"] = {
-        getPosition("point_cc_fire"),
-        getPosition("point_3_oclock"),
+        buildWaypoint("point_cc_fire"),
+        buildWaypoint("point_3_oclock"),
       }
     },
     water_c_3 = {
-      condition = "always",
+      condition = function() return "always" end,
       ["always"] = {
-        getPosition("point_c_water"),
-        getPosition("point_3_oclock"),
+        buildWaypoint("point_c_water"),
+        buildWaypoint("point_3_oclock"),
       }
     },
     water_cc_12 = {
-      condition = "always",
+      condition = function() return "always" end,
       ["always"] = {
-        getPosition("point_cc_water"),
-        getPosition("point_12_oclock"),
+        buildWaypoint("point_cc_water"),
+        buildWaypoint("point_12_oclock"),
       }
     },
     earth_c_9 = {
-      condition = "always",
+      condition = function() return "always" end,
       ["always"] = {
-        getPosition("point_c_earth"),
-        getPosition("point_9_oclock"),
+        buildWaypoint("point_c_earth"),
+        buildWaypoint("point_9_oclock"),
       }
     },
     earth_cc_6 = {
-      condition = "always",
+      condition = function() return "always" end,
       ["always"] = {
-        getPosition("point_cc_earth"),
-        getPosition("point_6_oclock"),
+        buildWaypoint("point_cc_earth"),
+        buildWaypoint("point_6_oclock"),
       }
     },
     point_3 = buildSinglePoint(3),
@@ -193,12 +210,12 @@ function buildLaneCreepSettings()
               Prefab.point_6,
               Prefab.earth_c,
               {
-                condition = "always",
+                condition = function() return "always" end,
                 ["always"] = {
-                  getPosition("point_9_oclock"),
-                  getPosition("point_10_oclock"),
-                  getPosition("point_11_oclock"),
-                  getPosition("point_12_oclock"),
+                  buildWaypoint("point_9_oclock"),
+                  buildWaypoint("point_10_oclock"),
+                  buildWaypoint("point_11_oclock"),
+                  buildWaypoint("point_12_oclock"),
                 }
               }
             }
@@ -213,12 +230,12 @@ function buildLaneCreepSettings()
               Prefab.point_3,
               Prefab.water_cc,
               {
-                condition = "always",
+                condition = function() return "always" end,
                 ["always"] = {
-                  getPosition("point_12_oclock"),
-                  getPosition("point_11_oclock"),
-                  getPosition("point_10_oclock"),
-                  getPosition("point_9_oclock"),
+                  buildWaypoint("point_12_oclock"),
+                  buildWaypoint("point_11_oclock"),
+                  buildWaypoint("point_10_oclock"),
+                  buildWaypoint("point_9_oclock"),
                 }
               }
             }
@@ -236,19 +253,19 @@ function buildLaneCreepSettings()
           clockwise = {
             Spawn = getPosition("point_c_fire_spawn"),
             Waypoints = {
-              Prefab.fire_c_6,
+              Prefab.fire_c_7,
               Prefab.earth_c,
               Prefab.point_9,
               Prefab.air_c,
               Prefab.point_12,
               Prefab.water_c,
               {
-                condition = "always",
+                condition = function() return "always" end,
                 ["always"] = {
-                  getPosition("point_3_oclock"),
-                  getPosition("point_4_oclock"),
-                  getPosition("point_5_oclock"),
-                  getPosition("point_6_oclock"),
+                  buildWaypoint("point_3_oclock"),
+                  buildWaypoint("point_4_oclock"),
+                  buildWaypoint("point_5_oclock"),
+                  buildWaypoint("point_6_oclock"),
                 }
               }
             }
@@ -263,12 +280,12 @@ function buildLaneCreepSettings()
               Prefab.point_9,
               Prefab.earth_cc,
               {
-                condition = "always",
+                condition = function() return "always" end,
                 ["always"] = {
-                  getPosition("point_6_oclock"),
-                  getPosition("point_5_oclock"),
-                  getPosition("point_4_oclock"),
-                  getPosition("point_3_oclock"),
+                  buildWaypoint("point_6_oclock"),
+                  buildWaypoint("point_5_oclock"),
+                  buildWaypoint("point_4_oclock"),
+                  buildWaypoint("point_3_oclock"),
                 }
               }
             }
@@ -293,12 +310,12 @@ function buildLaneCreepSettings()
               Prefab.point_9,
               Prefab.air_c,
               {
-                condition = "always",
+                condition = function() return "always" end,
                 ["always"] = {
-                  getPosition("point_12_oclock"),
-                  getPosition("point_1_oclock"),
-                  getPosition("point_2_oclock"),
-                  getPosition("point_3_oclock"),
+                  buildWaypoint("point_12_oclock"),
+                  buildWaypoint("point_1_oclock"),
+                  buildWaypoint("point_2_oclock"),
+                  buildWaypoint("point_3_oclock"),
                 }
               }
             }
@@ -313,12 +330,12 @@ function buildLaneCreepSettings()
               Prefab.point_6,
               Prefab.fire_cc,
               {
-                condition = "always",
+                condition = function() return "always" end,
                 ["always"] = {
-                  getPosition("point_3_oclock"),
-                  getPosition("point_2_oclock"),
-                  getPosition("point_1_oclock"),
-                  getPosition("point_12_oclock"),
+                  buildWaypoint("point_3_oclock"),
+                  buildWaypoint("point_2_oclock"),
+                  buildWaypoint("point_1_oclock"),
+                  buildWaypoint("point_12_oclock"),
                 }
               }
             }
@@ -343,12 +360,12 @@ function buildLaneCreepSettings()
               Prefab.point_3,
               Prefab.fire_c,
               {
-                condition = "always",
+                condition = function() return "always" end,
                 ["always"] = {
-                  getPosition("point_6_oclock"),
-                  getPosition("point_7_oclock"),
-                  getPosition("point_8_oclock"),
-                  getPosition("point_9_oclock"),
+                  buildWaypoint("point_6_oclock"),
+                  buildWaypoint("point_7_oclock"),
+                  buildWaypoint("point_8_oclock"),
+                  buildWaypoint("point_9_oclock"),
                 }
               }
             }
@@ -363,12 +380,12 @@ function buildLaneCreepSettings()
               Prefab.point_12,
               Prefab.air_c,
               {
-                condition = "always",
+                condition = function() return "always" end,
                 ["always"] = {
-                  getPosition("point_9_oclock"),
-                  getPosition("point_8_oclock"),
-                  getPosition("point_7_oclock"),
-                  getPosition("point_6_oclock"),
+                  buildWaypoint("point_9_oclock"),
+                  buildWaypoint("point_8_oclock"),
+                  buildWaypoint("point_7_oclock"),
+                  buildWaypoint("point_6_oclock"),
                 }
               }
             }
@@ -383,6 +400,6 @@ function buildLaneCreepSettings()
       }
     },
     SpawnInterval = 30,
-    CreepInterval = .7
+    CreepInterval = .3
   }
 end

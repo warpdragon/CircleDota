@@ -9,11 +9,11 @@ end
 function SpawnLaneCreeps:Init ()
   DebugPrint ('[lane_creeps/spawn] initialize')
 
-  self.Settings = buildLaneCreepSettings() -- build settings
-  buildLaneCreepSettings = nil -- remove build function
-  PrintTable(self.Settings)
-
-  Timers:CreateTimer(0, function()
+  Timers:CreateTimer(function()
+    if not self.Settings then
+      self.Settings = buildLaneCreepSettings() -- build settings
+      buildLaneCreepSettings = nil -- remove build function
+    end
     self:SpawnCreeps()
     return self.Settings.SpawnInterval
   end)
@@ -22,11 +22,9 @@ end
 -- Fancy function to spawn our lane creeps
 -- it's desinged in a way so we don't need to write a function for every lane
 function SpawnLaneCreeps:SpawnCreeps()
-  print('spawn!')
   -- First we loop through the first layer of our settings table.
   PrintTable(self.Settings.Lanes)
   for teamID,Lane in pairs(self.Settings.Lanes) do
-    print('teamID:', teamID)
     -- We get the teamID for later use and the table lane.
     -- Now we loop through the creeps to spawn them.
     for direction,Path in pairs(Lane.Paths) do
@@ -63,18 +61,28 @@ function SpawnLaneCreeps:SpawnCreeps()
 
         -- We don't want the creeps to walk next to each other so we add some
         -- delay inbetween giving them orders.
-        Timers:CreateTimer(creepID * self.Settings.CreepInterval, function()
+        local delay = creepID * self.Settings.CreepInterval - self.Settings.CreepInterval
+        local index = 0
+        hCreep.Orders = {
+          index = 1,
+          Waypoints = {}
+        }
+        Timers:CreateTimer(delay, function()
           -- We loop through all the Waypoints and queue the orders.
-          for waypointID,Waypoint in pairs(Path.Waypoints) do
-            for _,waypointPosition in pairs(Waypoint[tostring(Waypoint.condition)]) do
-              ExecuteOrderFromTable({
-                UnitIndex = hCreep:GetEntityIndex(),
-                OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
-                Position = waypointPosition,
-                Queue = true -- I'm not sure if we want true or 1 or "1". Valve is weird.
-              })
+          for WaypointGroupID,WaypointGroup in pairs(Path.Waypoints) do
+            --[[
+            print("teamID:", teamID, "teamshortname:", GetTeamName(teamID))
+            print("Waypoint:", WaypointGroupID)
+            PrintTable(WaypointGroup)
+            print("condition:", WaypointGroup.condition)
+            print("condition result:", WaypointGroup.condition())
+            ]]
+            for WaypointID,Waypoint in pairs(WaypointGroup[tostring(WaypointGroup.condition())]) do
+              hCreep.Orders.Waypoints[index] = Waypoint
+              index = index + 1
             end
           end
+          ExecuteOrderFromTable(hCreep.Orders.Waypoints[0].buildOrder(hCreep))
         end)
       end
     end

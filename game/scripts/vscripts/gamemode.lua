@@ -3,7 +3,7 @@ BAREBONES_VERSION = "1.00"
 
 -- Set this to true if you want to see a complete debug output of all events/processes done by barebones
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
-BAREBONES_DEBUG_SPEW = true
+BAREBONES_DEBUG_SPEW = false
 
 if GameMode == nil then
     DebugPrint( '[BAREBONES] creating barebones game mode' )
@@ -131,6 +131,7 @@ function GameMode:InitGameMode()
 -- Make buildings
   InitModule(SpawnTowers)
   InitModule(SpawnFountains)
+  InitModule(ChatCommand)
   InitModule(DevCheats)
 
   DebugPrint('[BAREBONES] Done loading Barebones gamemode!\n\n')
