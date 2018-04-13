@@ -1,3 +1,19 @@
+function split(s, delimiter)
+    result = {};
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
+end
+
+function regexsplit(s, delimiter)
+    result = {};
+    for match in s:gmatch("([^"..delimiter.."]+)") do
+        table.insert(result, match);
+    end
+    return result;
+end
+
 function DebugPrint(...)
   local spew = Convars:GetInt('barebones_spew') or -1
   if spew == -1 and BAREBONES_DEBUG_SPEW then
@@ -79,23 +95,23 @@ COLOR_GOLD = '\x1D'
 
 
 function DebugAllCalls()
-    if not GameRules.DebugCalls then
-        print("Starting DebugCalls")
-        GameRules.DebugCalls = true
+  if not GameRules.DebugCalls then
+    print("Starting DebugCalls")
+    GameRules.DebugCalls = true
 
-        debug.sethook(function(...)
-            local info = debug.getinfo(2)
-            local src = tostring(info.short_src)
-            local name = tostring(info.name)
-            if name ~= "__index" then
-                print("Call: ".. src .. " -- " .. name .. " -- " .. info.currentline)
-            end
-        end, "c")
-    else
-        print("Stopped DebugCalls")
-        GameRules.DebugCalls = false
-        debug.sethook(nil, "c")
-    end
+    debug.sethook(function(...)
+      local info = debug.getinfo(2)
+      local src = tostring(info.short_src)
+      local name = tostring(info.name)
+      if name ~= "__index" then
+        print("Call: ".. src .. " -- " .. name .. " -- " .. info.currentline)
+      end
+    end, "c")
+  else
+    print("Stopped DebugCalls")
+    GameRules.DebugCalls = false
+    debug.sethook(nil, "c")
+  end
 end
 
 
@@ -105,20 +121,19 @@ end
   Date: 09.08.2015.
   Hides all dem hats
 ]]
-function HideWearables( unit )
+function HideWearables(unit)
   unit.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
-    local model = unit:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() == "dota_item_wearable" then
-            model:AddEffects(EF_NODRAW) -- Set model hidden
-            table.insert(unit.hiddenWearables, model)
-        end
-        model = model:NextMovePeer()
+  local model = unit:FirstMoveChild()
+  while model ~= nil do
+    if model:GetClassname() == "dota_item_wearable" then
+      model:AddEffects(EF_NODRAW) -- Set model hidden
+      table.insert(unit.hiddenWearables, model)
     end
+    model = model:NextMovePeer()
+  end
 end
 
-function ShowWearables( unit )
-
+function ShowWearables(unit)
   for i,v in pairs(unit.hiddenWearables) do
     v:RemoveEffects(EF_NODRAW)
   end
