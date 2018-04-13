@@ -37,28 +37,6 @@ function buildLaneCreepSettings()
     }
   end
 
-  -- redirect output
-  local function startTouchHandler(keys)
-    local hTrigger = keys.caller
-    local hActivator = keys.activator
-    print(hTrigger)
-
-    local index = hActivator.Orders.index
-    local Waypoint = hActivator.Orders.Waypoints[index]
-    print(index)
-    if Waypoint.Zone == hTrigger then
-      ExecuteOrderFromTable(Waypoint.buildOrder(hActivator))
-      if hActivator.Orders.Waypoints[index + 1] then
-        index = index + 1
-      end
-    end
-  end
-  for Waypoint in Waypoints do
-    Waypoint.Zone.startTouchHandler = startTouchHandler
-    Waypoint.Zone:RedirectOutput('OnStartTouch', 'startTouchHandler', Waypoint.Zone)
-  end
-
-
   local Prefab = {
     air_c = {
       condition = function() return IsValidAlive(Entities:FindByName(nil, "fountain_air")) end,

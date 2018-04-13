@@ -22,11 +22,9 @@ end
 -- An NPC has spawned somewhere in game.  This includes heroes
 function GameMode:OnNPCSpawned(keys)
   DebugPrint("[BAREBONES] NPC Spawned")
+  DebugPrintTable(keys)
 
   local npc = EntIndexToHScript(keys.entindex)
-  keys.name = npc:GetDebugName()
-
-  DebugPrintTable(keys)
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
@@ -70,7 +68,7 @@ end
 -- state as necessary
 function GameMode:OnPlayerReconnect(keys)
   DebugPrint( '[BAREBONES] OnPlayerReconnect' )
-  DebugPrintTable(keys)
+  DebugPrintTable(keys) 
 end
 
 -- An item was purchased by a player
@@ -83,11 +81,11 @@ function GameMode:OnItemPurchased( keys )
   if not plyID then return end
 
   -- The name of the item purchased
-  local itemName = keys.itemname
-
+  local itemName = keys.itemname 
+  
   -- The cost of the item purchased
   local itemcost = keys.itemcost
-
+  
 end
 
 -- An ability was used by a player
@@ -221,7 +219,7 @@ end
 function GameMode:OnEntityKilled( keys )
   DebugPrint( '[BAREBONES] OnEntityKilled Called' )
   DebugPrintTable( keys )
-
+  
 
   -- The Unit that was Killed
   local killedUnit = EntIndexToHScript( keys.entindex_killed )
@@ -246,7 +244,7 @@ end
 
 
 
--- This function is called 1 to 2 times as the player connects initially but before they
+-- This function is called 1 to 2 times as the player connects initially but before they 
 -- have completely connected
 function GameMode:PlayerConnect(keys)
   DebugPrint('[BAREBONES] PlayerConnect')
@@ -257,11 +255,11 @@ end
 function GameMode:OnConnectFull(keys)
   DebugPrint('[BAREBONES] OnConnectFull')
   DebugPrintTable(keys)
-
+  
   local entIndex = keys.index+1
   -- The Player entity of the joining user
   local ply = EntIndexToHScript(entIndex)
-
+  
   -- The Player ID of the joining player
   local playerID = ply:GetPlayerID()
 end
@@ -285,8 +283,8 @@ function GameMode:OnItemCombined(keys)
   local player = PlayerResource:GetPlayer(plyID)
 
   -- The name of the item purchased
-  local itemName = keys.itemname
-
+  local itemName = keys.itemname 
+  
   -- The cost of the item purchased
   local itemcost = keys.itemcost
 end
@@ -310,7 +308,7 @@ function GameMode:OnTowerKill(keys)
   local team = keys.teamnumber
 end
 
--- This function is called whenever a player changes there custom team selection during Game Setup
+-- This function is called whenever a player changes there custom team selection during Game Setup 
 function GameMode:OnPlayerSelectedCustomTeam(keys)
   DebugPrint('[BAREBONES] OnPlayerSelectedCustomTeam')
   DebugPrintTable(keys)
