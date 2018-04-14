@@ -36,10 +36,8 @@ end
 
 function SpawnEarthFountain()
 	local pointFountain = Entities:FindByName( nil, "fountain_earth"):GetAbsOrigin()
-	local unitFountain = CreateUnitByName("npc_dota_air_fountain", pointFountain, true, nil, nil, DOTA_TEAM_CUSTOM_2)
-	-- unitFountain:SetRenderColor(96,255,64)
-	print(pointFountain)
-	print(unitFountain)
+	local unitFountain = CreateUnitByName("npc_dota_earth_fountain", pointFountain, true, nil, nil, DOTA_TEAM_CUSTOM_2)
+	unitFountain:SetRenderColor(96,255,64)
 	print ("earth fountain")
 
 end

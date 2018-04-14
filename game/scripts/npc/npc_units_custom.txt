@@ -64,16 +64,16 @@
 	// Fountains
 	//=====================================================================
 	#base "units/buildings/other/air/npc_dota_air_fountain.txt"
-	#base "units/buildings/other/air/npc_dota_fire_fountain.txt"
-	#base "units/buildings/other/air/npc_dota_water_fountain.txt"
-	#base "units/buildings/other/air/npc_dota_earth_fountain.txt"
+	#base "units/buildings/other/fire/npc_dota_fire_fountain.txt"
+	#base "units/buildings/other/water/npc_dota_water_fountain.txt"
+	#base "units/buildings/other/earth/npc_dota_earth_fountain.txt"
 
 	// Forts
 	//=====================================================================
 	#base "units/buildings/other/air/npc_dota_air_fort.txt"
-	#base "units/buildings/other/air/npc_dota_fire_fort.txt"
-	#base "units/buildings/other/air/npc_dota_water_fort.txt"
-	#base "units/buildings/other/air/npc_dota_earth_fort.txt"
+	#base "units/buildings/other/fire/npc_dota_fire_fort.txt"
+	#base "units/buildings/other/water/npc_dota_water_fort.txt"
+	#base "units/buildings/other/earth/npc_dota_earth_fort.txt"
 
 //=====================================================================
 // Towers
@@ -132,7 +132,7 @@
 	#base "units/buildings/barracks/air/npc_dota_air_melee_rax_clockwise.txt"
 	#base "units/buildings/barracks/air/npc_dota_air_melee_rax_counter_clockwise.txt"
 	#base "units/buildings/barracks/air/npc_dota_air_range_rax_clockwise.txt"
-	#base "units/buildings/barracks/air/npc_dota_air_range_rax_counter_clockwise.txt"	
+	#base "units/buildings/barracks/air/npc_dota_air_range_rax_counter_clockwise.txt"
 
 	// Fire Barracks
 	//=================================================================
@@ -149,7 +149,7 @@
 	#base "units/buildings/barracks/water/npc_dota_water_range_rax_counter_clockwise.txt"
 
 	// Earth Barracks
-	//=================================================================		
+	//=================================================================
 	#base "units/buildings/barracks/earth/npc_dota_earth_melee_rax_clockwise.txt"
 	#base "units/buildings/barracks/earth/npc_dota_earth_melee_rax_counter_clockwise.txt"
 	#base "units/buildings/barracks/earth/npc_dota_earth_range_rax_clockwise.txt"
